@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth" id="top">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrimstoneLabs - Software Engineering, Infrastructure, and Consulting</title>
+    <meta name="description" content="BrimstoneLabs provides blockchain engineering, infrastructure solutions, and consulting services for decentralized systems.">
+    <meta property="og:title" content="BrimstoneLabs - Blockchain Engineering">
+    <meta property="og:description" content="Expert blockchain engineering, infrastructure, and consulting services.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.png">
+    <!-- DNS Prefetch for CDN resources -->
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Critical CSS inline for faster initial paint -->
+    <style>
+        /* Critical CSS for above-the-fold content */
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #161616; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .loading-dots { display: flex; gap: 8px; }
+        .loading-dot { width: 12px; height: 12px; background-color: #eab308; border-radius: 50%; animation: pulse 1.4s infinite ease-in-out both; }
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes pulse { 0%, 80%, 100% { transform: scale(0); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+        .fade-out { animation: fadeOut 0.5s ease-out forwards; }
+        @keyframes fadeOut { to { opacity: 0; } }
+        body { margin: 0; background-color: #161616; }
+    </style>
+    
+    <!-- Load fonts with display=swap for better performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Main stylesheet -->
+    <link href="./dist/output.css" rel="stylesheet">
+    
+    <!-- External Libraries with async/defer loading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js" defer></script>
+    <script src="https://unpkg.com/split-type" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
+    
+    <!-- Bundled Application JavaScript -->
+    <script src="./dist/app.js" defer></script>
+</head>
+<body class="text-gray-100 theme-transition">
+    <!-- Loading overlay -->
+    <div class="loading-overlay">
+        <div class="loading-dots">
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+            <div class="loading-dot"></div>
+        </div>
+    </div>
+    
+    <header class="shadow-lg fixed w-full top-0 z-50 border-b border-gray-800 backdrop-blur-md" style="background-color: rgba(22, 22, 22, 0.8);">
+        <nav class="max-w-7xl xl:max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8" style="max-width: min(1600px, 100%)">
+            <div class="flex justify-between items-center h-16">
+                <a href="#top" class="flex items-center gap-2">
+                    <!-- Flask Logo -->
+                    <svg width="28" height="28" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path class="flask-outline" fill="white" class="partner-logo" d="M412.23,429.63l-88.53-266.79V56.79c14.12-1.68,25.1-13.73,25.1-28.29,0-15.72-12.79-28.5-28.5-28.5h-128.6c-15.72,0-28.5,12.79-28.5,28.5,0,14.57,10.99,26.61,25.1,28.29v106.05l-88.53,266.79c-6.41,19.33-3.26,39.88,8.66,56.39s30.43,25.98,50.79,25.98h193.56c20.36,0,38.88-9.47,50.79-25.98,11.92-16.51,15.07-37.06,8.66-56.39h0ZM185.63,28.5c0-3.35,2.72-6.06,6.07-6.07h128.6c3.35,0,6.07,2.72,6.07,6.07s-2.72,6.07-6.07,6.07h-128.6c-3.35,0-6.06-2.72-6.07-6.07ZM385.38,472.89c-7.65,10.6-19.53,16.68-32.6,16.68h-193.56c-13.07,0-24.95-6.08-32.6-16.68s-9.68-23.79-5.56-36.2l89.11-268.51c.38-1.14.57-2.33.57-3.53V57h90.53v107.66c0,1.2.19,2.39.57,3.53l89.11,268.51c4.12,12.4,2.09,25.6-5.56,36.2h0Z"/>
+                        <path fill="url(#flaskGradient)" d="M332.49,326.17c-.71-2.15-2.06-4.03-3.86-5.4-.21-.16-21.65-16.26-42.3-14.83-16.07,1.11-29.52,5.9-39.99,14.24-14.68,11.7-35.02,12.57-50.6,2.16-5.15-3.44-12.12-2.06-15.56,3.09-.56.84-1,1.74-1.32,2.7l-47.15,112.1c-2.98,8.97-1.5,18.49,4.01,26.08,5.51,7.66,14.08,12.05,23.52,12.05h193.55c9.44,0,18.01-4.39,23.52-12.05,5.51-7.63,6.96-17.14,4-26.08l-47.8-114.06h0Z"/>
+                        <defs>
+                            <linearGradient id="flaskGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ca8a04"/>
+                                <stop offset="100%" style="stop-color:#eab308"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    
+                    <div class="text-xl font-heading font-light text-white">
+                        Brimstone<span class="bg-gradient-to-r from-yellow-600 to-yellow-400 bg-clip-text text-transparent">Labs</span>
+                    </div>
+                </a>
+                
+                <div class="flex items-center space-x-6">
+                    <ul class="hidden md:flex space-x-8">
+                        <li><a href="#services" class="text-gray-300 hover:text-orange-400 transition-colors duration-200">Services</a></li>
+                        <li><a href="#process" class="text-gray-300 hover:text-orange-400 transition-colors duration-200">Process</a></li>
+                        <li><a href="#careers" class="text-gray-300 hover:text-orange-400 transition-colors duration-200">Careers</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-orange-400 transition-colors duration-200">About</a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-orange-400 transition-colors duration-200">Contact</a></li>
+                    </ul>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded bg-gray-800/50 border border-gray-700 text-gray-300 hover:text-orange-400 hover:border-orange-500 transition-colors duration-200">
+                    <!-- Moon icon (dark mode) -->
+                    <svg id="moon-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                    <!-- Sun icon (light mode) -->
+                    <svg id="sun-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    </button>
+                    
+                    <button class="md:hidden text-gray-300" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="#services" class="block py-2 text-gray-300 hover:text-orange-400 transition-colors duration-200">Services</a>
+                <a href="#process" class="block py-2 text-gray-300 hover:text-orange-400 transition-colors duration-200">Process</a>
+                <a href="#careers" class="block py-2 text-gray-300 hover:text-orange-400 transition-colors duration-200">Careers</a>
+                <a href="#about" class="block py-2 text-gray-300 hover:text-orange-400 transition-colors duration-200">About</a>
+                <a href="#contact" class="block py-2 text-gray-300 hover:text-orange-400 transition-colors duration-200">Contact</a>
+            </div>
+        </nav>
+    </header>
+    
+
+    <section class="relative py-16 md:py-32 px-4 pt-24 md:pt-40 2xl:py-48 2xl:pt-56">
+        <div class="relative text-center max-w-4xl xl:max-w-6xl 3xl:max-w-7xl 4xl:max-w-screen-xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-heading font-extralight mb-8 text-white">
+                Software Engineering, Infrastructure, and Consulting
+            </h1>
+            <p class="reveal-type text-xl md:text-2xl text-gray-400 font-light mb-12">
+                Bespoke software that powers startups and enterprises from launch to global scale.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="#contact" class="px-8 py-3 animated-gradient text-white font-semibold rounded hover:-translate-y-0.5 transform transition-all duration-300 ease shadow-lg">
+                    Get in Touch
+                </a>
+                <a href="#services" class="px-8 py-3 bg-gray-800/50 border border-gray-700 text-gray-300 font-semibold rounded hover:bg-gray-700/50 hover:border-orange-500 transform hover:-translate-y-1 transition-all duration-200">
+                    View Services &rarr;
+                </a>
+            </div>
+<!--            -->
+<!--            &lt;!&ndash; Partner Logos &ndash;&gt;-->
+<!--            <div class="flex flex-col items-center">-->
+<!--                <p class="text-gray-500 text-sm mb-6 uppercase tracking-wider">Trusted Partners</p>-->
+<!--                <div class="grid grid-cols-2 md:flex md:items-center justify-center md:justify-center gap-8 md:gap-12 opacity-60">-->
+<!--                    &lt;!&ndash; Stellar Logo &ndash;&gt;-->
+<!--                    <div class="flex items-center justify-center">-->
+<!--                        <svg class="w-32 md:w-40" width="161" height="40" viewBox="0 0 1745.5 623.5" xmlns="http://www.w3.org/2000/svg">-->
+<!--                            <g>-->
+<!--                                <g>-->
+<!--                                    <path fill="white" class="partner-logo" d="M342.9,124.7c24.9,0,49,4.9,71.8,14.5c12.1,5.1,23.7,11.6,34.5,19.2l-2.3,1.2l-29.6,15.1-->
+<!--                                        c-22.6-12.6-48.3-19.2-74.4-19.2c-0.4,0-0.8,0-1.2,0c-20.1,0.2-39.7,4.2-58.2,11.9c-18.5,7.8-35.1,18.9-49.3,33.1-->
+<!--                                        c-29,29.1-45,67.7-45,108.7c0,6.7,0.4,13.4,1.3,20.1l0.3,2.1l1.9-1l255.5-130.3l52.9-27l59.9-30.6v34.6l-61.7,31.5l-30.3,15.4-->
+<!--                                        L199.7,361.5l-1.2,0.7l0,0l-13.8,7l-14,7.1l0-0.1l-1.3,0.6l-44.8,22.9v-34.6l15.2-7.7c12.7-6.5,20.3-19.9,19.2-34.2-->
+<!--                                        c-0.3-4.7-0.5-9.4-0.5-14.1c0-24.9,4.9-49.1,14.5-71.9c9.3-22,22.6-41.7,39.5-58.7c16.9-16.9,36.6-30.3,58.6-39.6-->
+<!--                                        C293.8,129.6,318,124.7,342.9,124.7"/>-->
+<!--                                </g>-->
+<!--                                <g>-->
+<!--                                    <path fill="white" class="partner-logo" d="M561.1,223.4V258l-15.2,7.7c-12.7,6.5-20.3,19.9-19.2,34.2c0.4,4.7,0.5,9.5,0.5,14.2-->
+<!--                                        c0,24.9-4.9,49.1-14.5,71.9c-9.3,22-22.6,41.7-39.5,58.7c-16.9,17-36.7,30.3-58.6,39.6c-22.7,9.6-46.9,14.5-71.8,14.5-->
+<!--                                        s-49-4.9-71.8-14.5c-12.2-5.2-23.8-11.7-34.6-19.3l30.6-15.6l1.2-0.6c22.6,12.6,48.4,19.3,74.6,19.3c0.4,0,0.7,0,1.1,0-->
+<!--                                        c20.1-0.1,39.7-4.1,58.2-11.9c18.5-7.8,35.1-18.9,49.3-33.1c29-29,45-67.7,45-108.7c0-6.7-0.4-13.5-1.3-20.2l-0.3-2.1l-1.9,1-->
+<!--                                        L237.2,423.2l-52.9,27l-59.7,30.4V446l61.5-31.4l30.3-15.4L561.1,223.4"/>-->
+<!--                                </g>-->
+<!--                            </g>-->
+<!--                            <g>-->
+<!--                                <path fill="white" class="partner-logo" d="M869.6,251.5h-33.8c-8.5-28.7-36.5-38.3-61.5-38.3c-19.1,0-52.6,8.5-52.6,36.2c0,21.9,17.4,32.8,40.3,37.9-->
+<!--                                    l28.7,6.5c37.9,8.2,83.3,22.5,83.3,72.4c0,48.5-45.1,74.1-94.3,74.1c-58.4,0-95.3-31.8-101.8-81.3h34.2-->
+<!--                                    c6.5,34.2,30.4,51.9,68.3,51.9c36.5,0,57.7-17.4,57.7-41.7c0-26-22.2-36.9-53.3-43.7l-30.7-6.5c-33.8-7.5-68-26.3-68-67.6-->
+<!--                                    c0-47.1,49.5-67.6,89.5-67.6C820.1,183.9,860,203.7,869.6,251.5z"/>-->
+<!--                                <path fill="white" class="partner-logo" d="M950.9,206.1v46.1h34.8v24.9h-34.8v108.9c0,19.1,1.4,23.9,19.1,23.9h15.7v26h-22.5-->
+<!--                                    c-35.2,0-43.4-7.9-43.4-46.1V277.1h-29v-24.9h29v-46.1H950.9z"/>-->
+<!--                                <path fill="white" class="partner-logo" d="M1090.9,413.1c27.3,0,42.3-12.3,50.2-30.4h32.1c-8.5,31.8-37.6,57.7-82.3,57.7c-58.1,0-90.2-41.7-90.2-96-->
+<!--                                    c0-58.1,38.9-95.3,89.1-95.3c56,0,89.8,47.1,85.7,105.2h-141.4C1035.6,393.9,1063.6,413.1,1090.9,413.1z M1142.8,327.7-->
+<!--                                    c-0.7-26-20.1-51.9-52.9-51.9c-27.7,0-52.6,15-55.3,51.9H1142.8z"/>-->
+<!--                                <path fill="white" class="partner-logo" d="M1205,435.9V188.3h31.1v247.6H1205z"/>-->
+<!--                                <path fill="white" class="partner-logo" d="M1274.3,435.9V188.3h31.1v247.6H1274.3z"/>-->
+<!--                                <path fill="white" class="partner-logo" d="M1458.4,322.9v-4.4c0-33.5-18.8-44.7-41.7-44.7c-25.6,0-40.6,14-42,36.5h-32.1c3.1-39.6,37.9-61.8,73.8-61.8-->
+<!--                                    c50.5,0,73.4,24.2,73.1,75.8l-0.3,42.3c-0.3,30.7,1.4,51.9,4.8,69.3h-31.4c-1-6.8-2-14.3-2.4-25.3c-11.3,18.8-30.4,29.7-62.8,29.7-->
+<!--                                    c-34.5,0-63.2-19.1-63.2-52.9C1334.1,344.1,1382.9,331.4,1458.4,322.9z M1368.6,386.8c0,17.4,13.3,29,35.5,29-->
+<!--                                    c29,0,56.7-13.3,56.7-56.7v-11.6C1404.4,353.3,1368.6,361.5,1368.6,386.8z"/>-->
+<!--                                <path fill="white" class="partner-logo" d="M1602.5,283.3c-28.7,0-43,16.1-43,56.4v96.3h-31.1V252.2h30.4v32.1c9.2-20.8,28-32.4,51.9-33.1-->
+<!--                                    c3.1,0,5.8,0,9.2,0.3v33.1C1613.4,284,1607.6,283.3,1602.5,283.3z"/>-->
+<!--                            </g>-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    &lt;!&ndash; Maya Protocol Logo &ndash;&gt;-->
+<!--                    <div class="flex items-center justify-center">-->
+<!--                        <svg class="w-28 md:w-36" width="140" height="30" viewBox="0 0 427 181" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                            <path d="M126.849 41.0163C130.02 41.0163 134.075 40.9969 139.399 40.9192V38.7635C139.399 32.4907 135.305 29.0532 129.194 29.0532C123.082 29.0532 119.334 31.8887 119.103 36.9963H101.037C101.614 24.6642 110.647 14.8374 129.174 14.8374C146.645 14.8374 157.427 23.8485 157.427 40.2007V77.8766H139.361V70.6522C134.075 76.5754 126.926 79.0613 119.315 79.0613C107.706 79.0613 99.0382 72.6719 99.0382 60.9419C99.0382 48.6292 108.187 41.0357 126.83 41.0357L126.849 41.0163ZM124.735 65.7776C133.172 65.7776 138.573 58.8056 139.38 53.4844C134.825 53.3678 131.769 53.3484 128.598 53.3484C120.506 53.3484 117.22 55.8343 117.22 59.9903C117.22 63.7773 119.911 65.797 124.715 65.797L124.735 65.7776Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M264.172 41.0163C267.343 41.0163 271.38 41.0552 276.723 40.8998V38.7635C276.723 32.4907 272.629 29.0532 266.517 29.0532C260.405 29.0532 256.657 31.8887 256.427 36.9963H238.36C238.937 24.6642 247.97 14.8374 266.498 14.8374C283.968 14.8374 294.75 23.8485 294.75 40.2007V77.8766H276.684V70.6522C271.399 76.5754 264.249 79.0613 256.638 79.0613C245.029 79.0613 236.362 72.6719 236.362 60.9419C236.362 48.6292 245.51 41.0357 264.153 41.0357L264.172 41.0163ZM262.058 65.7776C270.495 65.7776 275.896 58.8056 276.723 53.4844C272.456 53.5232 269.092 53.3484 265.94 53.3484C257.849 53.3484 254.562 55.8343 254.562 59.9903C254.562 63.7773 257.253 65.797 262.058 65.797V65.7776Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M0.173134 96.87H37.805C54.4491 96.87 66.0576 108.6 66.0576 123.768C66.0576 138.935 54.4491 150.665 37.805 150.665H13.0695V179.815H0.173134V96.87ZM36.9977 139.401C46.3768 139.401 52.7192 132.643 52.7192 123.768C52.7192 114.892 46.396 108.134 36.9977 108.134H13.0695V139.421H36.9977V139.401Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M74.8792 118.912H86.8337V127.924C91.5232 120.35 100.326 116.427 108.994 118.097V129.477C96.0975 127.224 86.8337 133.866 86.8337 144.994V179.835H74.8792V118.912Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M144.031 117.728C162.213 117.728 175.685 131.225 175.685 149.364C175.685 167.503 162.193 181 144.031 181C125.868 181 112.376 167.503 112.376 149.364C112.376 131.225 125.868 117.728 144.031 117.728ZM144.031 170.804C154.928 170.804 163.27 161.677 163.27 149.364C163.27 137.051 154.948 127.807 144.031 127.807C133.114 127.807 124.792 137.051 124.792 149.364C124.792 161.677 133.114 170.804 144.031 170.804Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M202.65 101.609V118.912H220.505V128.992H202.65V156.957C202.65 167.736 208.397 173.193 222.581 168.92V179.116C200.306 185.04 190.677 173.911 190.677 156.957V128.992H177.684L181.682 118.912H190.677V101.609H202.65Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M260.463 117.728C278.645 117.728 292.118 131.225 292.118 149.364C292.118 167.503 278.626 181 260.463 181C242.301 181 228.808 167.503 228.808 149.364C228.808 131.225 242.301 117.728 260.463 117.728ZM260.463 170.804C271.361 170.804 279.702 161.677 279.702 149.364C279.702 137.051 271.38 127.807 260.463 127.807C249.546 127.807 241.224 137.051 241.224 149.364C241.224 161.677 249.546 170.804 260.463 170.804Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M372.243 117.728C390.425 117.728 403.898 131.225 403.898 149.364C403.898 167.503 390.406 181 372.243 181C354.081 181 340.589 167.503 340.589 149.364C340.589 131.225 354.081 117.728 372.243 117.728ZM372.243 170.804C383.141 170.804 391.482 161.677 391.482 149.364C391.482 137.051 383.16 127.807 372.243 127.807C361.327 127.807 353.005 137.051 353.005 149.364C353.005 161.677 361.327 170.804 372.243 170.804Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M415.046 101.609H427V179.815H415.046V101.609Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M67.9026 0L43.2824 31.4614L18.5469 0H0V77.8572H19.4694V28.8008L34.1147 52.0084H51.7774L66.5189 28.6842V77.8572H85.9882V0H67.9026Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M179.664 79.605H199.287L190.581 101.511H170.958L179.664 79.605Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M207.552 79.605L232.921 16.0026H213.683L198.787 58.2035L183.912 16.0026H163.616L188.928 79.605H207.552Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M332.728 169.814C322.504 169.328 314.854 161.327 314.854 149.344C314.854 137.362 322.504 129.807 332.728 129.322V117.747C315.239 118.194 302.419 131.516 302.419 149.344C302.419 167.173 315.239 180.495 332.728 180.942V169.814Z" fill="white" class="partner-logo"/>-->
+<!--                            <path d="M52.7576 66.2049H33.9225V77.8767H52.7576V66.2049Z" fill="#72FFA1"/>-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    &lt;!&ndash; Dash Logo &ndash;&gt;-->
+<!--                    <div class="flex items-center justify-center">-->
+<!--                        <svg class="w-20 md:w-24" width="90" height="24" viewBox="0 0 1438.15 421.17" xmlns="http://www.w3.org/2000/svg">-->
+<!--                            <path fill="white" class="partner-logo" d="M312.66,26.11H147.23l-13.71,76.63,149.28.18c73.52,0,95.26,26.69,94.64,71-.32,22.7-10.16,61.07-14.41,73.51-11.33,33.16-34.6,71-121.86,70.85l-145.11-.06L82.32,394.88H247.38c58.22,0,83-6.77,109.2-18.89,58.13-26.84,92.72-84.21,106.57-159.08C483.79,105.42,458.09,26.11,312.66,26.11Z"/>-->
+<!--                            <path fill="white" class="partner-logo" d="M824.28,395.06l11.66-66.63H977.26c11.1,0,18.88-6.67,20.54-17.77,2.22-11.11-3.33-17.77-14.43-17.77H915.8c-53.31,0-78.85-31.09-69.41-84.4s46.09-84.39,99.39-84.39h153.53l-12.21,66.63H951.79c-11.11,0-18.88,6.66-20.55,17.76-2.22,11.11,3.33,17.77,14.44,17.77h67.57c53.3,0,78.84,31.1,69.41,84.4s-45.54,84.4-98.84,84.4Z"/>-->
+<!--                            <path fill="white" class="partner-logo" d="M609.06,395.05c-87.74,0-127.17-47.76-111.62-135.5,15-87.73,71.64-135.49,159.37-135.49H812.3l-47.76,271ZM710.12,190.7h-40c-47.75,0-76,21.1-84.29,68.85-8.88,47.76,8.89,68.86,56.64,68.86h43.76Z"/>-->
+<!--                            <path fill="white" class="partner-logo" d="M1292,395.05l27.77-157.71c5-31.1-7.62-44.42-38.72-44.42h-44.22l-35.54,202.13h-90l65.07-368.94h90l-17.32,98h67.4c78.85,0,107.17,34.43,93.29,113.28l-27.77,157.71Z"/>-->
+<!--                            <path fill="white" class="partner-logo" d="M75.85,172c-43.33,0-49.54,28.24-53.64,45.3-5.37,22.35-7.13,31.4-7.13,31.4H184.46c43.33,0,49.54-28.24,53.64-45.3,5.37-22.35,7.13-31.4,7.13-31.4Z"/>-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                    -->
+<!--                    &lt;!&ndash; Switchly Logo &ndash;&gt;-->
+<!--                    <div class="flex items-center justify-center">-->
+<!--                        <svg class="w-24 md:w-32" width="120" height="24" viewBox="0 0 1515 340" xmlns="http://www.w3.org/2000/svg">-->
+<!--                            <path fill="white" class="partner-logo" d="M389.5,63.428h1.43l16.082-34C385.329,9.156,359.541,0,330,0c-21.444,0-39.738,5.812-55.224,19.411s-22.23,27.257-22.23,48.964q0,40.8,36.454,61.553,8.929,5.016,24.839,11.989t25.375,11.452a56.463,56.463,0,0,1,17.155,12.7c5.121,5.491,7.684,6.809,7.684,13.967q0,14.318-11.079,22.546a41.422,41.422,0,0,1-25.375,8.23q-34.671,0-61.115-25.766h-1.429l-16.083,34q11.073,12.171,32.523,22.188t48.963,10.02q31.8,0,54.681-20.4t22.874-52.964c0-27.2-12.152-42.714-36.455-56.554a212.606,212.606,0,0,0-24.839-12.167q-15.906-6.793-25.375-11.094a52.584,52.584,0,0,1-17.155-12.7q-7.689-8.4-7.684-18.788c0-9.78,2.753-13.413,10.258-18.9s16.5-8.231,26.984-8.231q28.948,0,55.753,23.977h0ZM503.258,250.887l37.884-108.075h1.429l39.314,108.075h27.876L670.876,79.111H630.848l-35.74,102.35h-1.429L556.51,79.111H527.918L492.536,180.388h-1.43L455.724,79.111H413.552l61.114,171.776h28.592Zm231.052,0V79.111h-41.1V250.887h41.1Zm0.715-209.352V0.38H692.5V41.535h42.53Zm129.66,173.934q-15.732,0-22.159-7.158-4.648-5.367-4.646-17.177V114.9H889.7V79.111H837.88V21.852h-41.1V79.111H757.466V114.9H796.78v70.868q0,35.789,15.01,50.817,14.651,14.67,41.1,14.672A94.672,94.672,0,0,0,889.7,244.1v-31.85h-1.429q-9.649,3.221-23.588,3.221h0ZM1042.48,194q-21.795,18.972-44.313,18.967-23.589,0-36.991-14.852c-8.935-9.9-13.4-17.6-13.4-33.113s4.646-23.21,13.938-33.113,21.444-14.851,36.455-14.851q24.664,0,41.813,16.1h1.43L1057.49,102q-25.38-23.258-60.753-23.261-40.03,0-65.582,25.767c-17.038,17.177-25.554,34.605-25.554,62.279,0,26.247,8.1,42.719,24.3,59.416s37.884,25.05,65.046,25.05a100.911,100.911,0,0,0,37.35-6.978q17.685-6.978,28.77-19.5L1043.91,194h-1.43ZM1127.54,0.38h-41.1V250.887h41.1V129.213q3.57-5.368,13.58-10.736a46.125,46.125,0,0,1,22.16-5.368q13.95,0,22.16,9.3t8.22,30.061v98.413h41.1V143.169c0-21.947-8.09-39-19.76-51.169s-23.85-14-41-14c-18.11,0-33.12,2.308-45.03,15.426h-1.43V0.38Zm188.74,250.507V0.38h-41.1V250.887h41.1Zm65.44-171.776h-43.61l66.12,171.178-36.09,88.751h41.46L1515.02,79.111h-41.45l-47.89,120.718h-1.43Z"/>-->
+<!--                            <path fill="white" class="partner-logo" d="M148,118h38"/>-->
+<!--                            <path fill="white" class="partner-logo" d="M70.769,41L28.308,83.5,0,111.833l28.307,28.333L56.615,168.5l28.307-28.333L56.615,111.833l42.461-42.5ZM113.23,211l42.461-42.5L184,140.166l-28.308-28.333L127.384,83.5,99.076,111.833l28.308,28.333-42.461,42.5Z"/>-->
+<!--                        </svg>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+           </div>
+    </section>
+
+
+    <section id="services" class="py-12 md:py-20 px-4">
+        <div class="max-w-7xl xl:max-w-screen-xl 3xl:max-w-screen-2xl 4xl:max-w-screen-2xl mx-auto">
+            <h2 class="reveal-type text-3xl md:text-4xl font-heading font-thin text-center mb-12 text-white">
+                Our Services
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-3 text-white">Software Engineering</h3>
+                    <p class="text-gray-400">Software research, design, development, and deployment</p>
+                </div>
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-3 text-white">Cloud Infrastructure</h3>
+                    <p class="text-gray-400">Whether you're looking to scale or migrate, we can help.</p>
+                </div>
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-3 text-white">Software Consultancy</h3>
+                    <p class="text-gray-400">Strategic guidance from start-up through to enterprise.</p>
+                </div>
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-3 text-white">Artificial Intelligence</h3>
+                    <p class="text-gray-400">Identification & execution of generative AI strategies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="py-12 md:py-20 px-4">
+        <div class="max-w-7xl xl:max-w-screen-xl 3xl:max-w-screen-2xl 4xl:max-w-screen-2xl mx-auto">
+            <h2 class="reveal-type text-3xl md:text-4xl font-heading font-thin text-center mb-16 text-white">
+                Our Process
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white"><span class="text-orange-500 mr-2">1.</span> Requirements Gathering & Analysis</h3>
+                    <p class="text-gray-400 leading-relaxed">Collaborate with stakeholders to understand business needs, user expectations, and technical constraints. Define clear, actionable requirements.</p>
+                </div>
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white"><span class="text-orange-500 mr-2">2.</span> System Design & Architecture</h3>
+                    <p class="text-gray-400 leading-relaxed">Create the blueprint: choose tech stacks, design system architecture, and establish data flows, user interfaces, and scalability plans.</p>
+                </div>
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white"><span class="text-orange-500 mr-2">3.</span> Development & Implementation</h3>
+                    <p class="text-gray-400 leading-relaxed">Build the software using agile or iterative methodologies. Prioritize code quality, version control, and integration with existing systems.</p>
+                </div>
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white"><span class="text-orange-500 mr-2">4.</span> Testing & Quality Assurance</h3>
+                    <p class="text-gray-400 leading-relaxed">Conduct rigorous testing (unit, integration, system, user acceptance) to ensure functionality, performance, and security meet the defined standards.</p>
+                </div>
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white"><span class="text-orange-500 mr-2">5.</span> Deployment & Launch</h3>
+                    <p class="text-gray-400 leading-relaxed">Roll out the solution in a controlled environment. Monitor for issues, and ensure documentation and training are in place for end users and admins.</p>
+                </div>
+                <div class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white"><span class="text-orange-500 mr-2">6.</span> Maintenance & Continuous Improvement</h3>
+                    <p class="text-gray-400 leading-relaxed">Provide ongoing support, monitor system health, fix bugs, and release updates to adapt to evolving user needs and market conditions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="careers" class="py-12 md:py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="reveal-type text-3xl md:text-4xl font-heading font-thin text-center mb-16 text-white">
+                Join Our Team
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <a href="https://tripetto.app/run/3RZPLYXU0N" target="_blank" class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20 block">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white">Front-End Developer</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">Build highly performant interfaces for enterprise applications using modern frameworks like React and Next.js.</p>
+                    <div class="text-sm text-gray-500 mb-4">
+                        <span class="bg-gray-700 px-2 py-1 rounded mr-2">React</span>
+                        <span class="bg-gray-700 px-2 py-1 rounded mr-2">TypeScript</span>
+                        <span class="bg-gray-700 px-2 py-1 rounded">GraphQL</span>
+                    </div>
+                    <span class="text-orange-400 hover:text-orange-300 font-medium">Apply Now →</span>
+                </a>
+                
+                <a href="https://tripetto.app/run/3RZPLYXU0N" target="_blank" class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20 block">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white">DevOps Engineer</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">Manage cloud infrastructure, CI/CD pipelines, and ensure high availability of our validator nodes and services.</p>
+                    <div class="text-sm text-gray-500 mb-4">
+                        <span class="bg-gray-700 px-2 py-1 rounded mr-2">Docker</span>
+                        <span class="bg-gray-700 px-2 py-1 rounded mr-2">Kubernetes</span>
+                        <span class="bg-gray-700 px-2 py-1 rounded">AWS</span>
+                    </div>
+                    <span class="text-orange-400 hover:text-orange-300 font-medium">Apply Now →</span>
+                </a>
+                
+                <a href="https://tripetto.app/run/3RZPLYXU0N" target="_blank" class="feature-card p-8 rounded border hover:border-orange-500 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-orange-500/20 block">
+                    <h3 class="text-xl font-heading font-light mb-4 text-white">Account Manager</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">Nurture client relationships, identify growth opportunities, and ensure project success from kickoff to delivery and beyond.</p>
+                    <div class="text-sm text-gray-500 mb-4">
+                        <span class="bg-gray-700 px-2 py-1 rounded mr-2">Client Success</span>
+                        <span class="bg-gray-700 px-2 py-1 rounded mr-2">Sales</span>
+                        <span class="bg-gray-700 px-2 py-1 rounded">Strategy</span>
+                    </div>
+                    <span class="text-orange-400 hover:text-orange-300 font-medium">Apply Now →</span>
+                </a>
+            </div>
+            
+            <div class="text-center mt-12 careers-cta">
+                <p class="text-gray-400 mb-6">Don't see a perfect fit? We're always looking for exceptional talent.</p>
+                <a href="https://tripetto.app/run/3RZPLYXU0N" target="_blank" class="px-8 py-3 animated-gradient text-white font-semibold rounded hover:-translate-y-0.5 transform transition-all duration-300 ease shadow-lg">
+                   Careers Enquiry
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-12 md:py-20 px-4">
+        <div class="max-w-4xl xl:max-w-6xl 2xl:max-w-6xl mx-auto text-center">
+            <h2 class="reveal-type text-3xl md:text-4xl font-heading font-thin mb-8 text-white">
+                About Us
+            </h2>
+            <p class="text-lg md:text-xl text-gray-300 font-thin leading-relaxed">
+                Brimstone Labs builds high-assurance, enterprise-ready systems for both the public and private sectors. We engineer bespoke software for start-ups and enterprises alike; whether you're serving a niche market or scaling to global reach, we deliver innovative solutions tailored to your unique needs and goals.
+            </p>
+            <h3 class="reveal-type text-3xl md:text-4xl font-heading font-thin mb-8 text-white pt-10 md:pt-16">
+                Leadership
+            </h3>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 md:gap-10 max-w-7xl mx-auto">
+
+            <!-- Founder 1 -->
+            <div class="founder-card">
+                <div class="w-full aspect-[4/5] max-w-md mx-auto md:mx-0 bg-gray-800/50 overflow-hidden relative">
+                    <img src="src/img/ash.jpg" alt="Ash - Co-Founder" class="w-full h-full object-cover">
+                    <!-- Gradient overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <!-- Founder info overlay -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-xl font-heading font-light mb-1 text-white">Ash Francis</h3>
+                                <p class="text-white/90 font-medium">Co-Founder</p>
+                            </div>
+                            <!--                                <a href="#" class="text-white/80 hover:text-white transition-colors duration-200">-->
+                            <!--                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">-->
+                            <!--                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>-->
+                            <!--                                    </svg>-->
+                            <!--                                </a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Founder 2 -->
+            <div class="founder-card">
+                <div class="w-full aspect-[4/5] max-w-md mx-auto md:mx-0 bg-gray-800/50 overflow-hidden relative">
+
+                    <img src="src/img/alex.jpg" alt="Alex - Co-Founder" class="w-full h-full object-cover">
+                    <!-- Gradient overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <!-- Founder info overlay -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-xl font-heading font-light mb-1 text-white">Alex Cox</h3>
+                                <p class="text-white/90 font-medium">Co-Founder</p>
+                            </div>
+                            <!--                                <a href="#" class="text-white/80 hover:text-white transition-colors duration-200">-->
+                            <!--                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">-->
+                            <!--                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>-->
+                            <!--                                    </svg>-->
+                            <!--                                </a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Founder 3 -->
+            <div class="founder-card">
+                <div class="w-full aspect-[4/5] max-w-md mx-auto md:mx-0 bg-gray-800/50 overflow-hidden relative">
+                    <img src="src/img/sam.jpg" alt="Sam - Co-Founder" class="w-full h-full object-cover">
+                    <!-- Gradient overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <!-- Founder info overlay -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="text-left">
+                                <h3 class="text-xl font-heading font-light mb-1 text-white">Mayowa Egbinola</h3>
+                                <p class="text-white/90 font-medium">Co-Founder</p>
+                            </div>
+                            <!--                                <a href="#" class="text-white/80 hover:text-white transition-colors duration-200">-->
+                            <!--                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">-->
+                            <!--                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>-->
+                            <!--                                    </svg>-->
+                            <!--                                </a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Founders Section -->
+    <section id="founders" class="py-12 md:py-20 px-4">
+
+    </section>
+
+    <section id="contact" class="py-12 md:py-20 px-4">
+        <div class="max-w-2xl xl:max-w-4xl 2xl:max-w-4xl mx-auto">
+            <h2 class="reveal-type text-3xl md:text-4xl font-heading font-thin text-center mb-12 text-white">
+                Get In Touch
+            </h2>
+            <form class="space-y-4">
+                <input 
+                    type="text" 
+                    placeholder="Your Name" 
+                    required 
+                    class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 text-gray-100 placeholder-gray-400">
+                <input 
+                    type="email" 
+                    placeholder="Your Email" 
+                    required 
+                    class="w-full px-4 py-3 bg-gray-800/50 border border-gray-700 rounded focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 text-gray-100 placeholder-gray-400">
+                <textarea 
+                    placeholder="Your Message" 
+                    rows="5" 
+                    required 
+                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 text-gray-100 placeholder-gray-500 resize-none"></textarea>
+                <button 
+                    type="submit" 
+                    class="w-full px-8 py-3 animated-gradient text-white font-semibold rounded hover:-translate-y-0.5 transform transition-all duration-300 ease shadow-lg">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="border-t border-gray-800 py-12 px-4 backdrop-blur-md" style="background-color: rgba(22, 22, 22, 0.8);">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:justify-between gap-8 md:gap-4">
+            <div class="flex flex-col md:flex-row items-center gap-4">
+                <!-- Footer Logo -->
+                <div class="flex items-center gap-2">
+                    <svg width="24" height="24" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path class="footer-logo" fill="#6b7280" d="M412.23,429.63l-88.53-266.79V56.79c14.12-1.68,25.1-13.73,25.1-28.29,0-15.72-12.79-28.5-28.5-28.5h-128.6c-15.72,0-28.5,12.79-28.5,28.5,0,14.57,10.99,26.61,25.1,28.29v106.05l-88.53,266.79c-6.41,19.33-3.26,39.88,8.66,56.39s30.43,25.98,50.79,25.98h193.56c20.36,0,38.88-9.47,50.79-25.98,11.92-16.51,15.07-37.06,8.66-56.39h0ZM185.63,28.5c0-3.35,2.72-6.06,6.07-6.07h128.6c3.35,0,6.07,2.72,6.07,6.07s-2.72,6.07-6.07,6.07h-128.6c-3.35,0-6.06-2.72-6.07-6.07ZM385.38,472.89c-7.65,10.6-19.53,16.68-32.6,16.68h-193.56c-13.07,0-24.95-6.08-32.6-16.68s-9.68-23.79-5.56-36.2l89.11-268.51c.38-1.14.57-2.33.57-3.53V57h90.53v107.66c0,1.2.19,2.39.57,3.53l89.11,268.51c4.12,12.4,2.09,25.6-5.56,36.20h0Z"/>
+                        <path class="footer-logo" fill="#6b7280" d="M332.49,326.17c-.71-2.15-2.06-4.03-3.86-5.4-.21-.16-21.65-16.26-42.3-14.83-16.07,1.11-29.52,5.9-39.99,14.24-14.68,11.7-35.02,12.57-50.6,2.16-5.15-3.44-12.12-2.06-15.56,3.09-.56.84-1,1.74-1.32,2.7l-47.15,112.1c-2.98,8.97-1.5,18.49,4.01,26.08,5.51,7.66,14.08,12.05,23.52,12.05h193.55c9.44,0,18.01-4.39,23.52-12.05,5.51-7.63,6.96-17.14,4-26.08l-47.8-114.06h0Z"/>
+                    </svg>
+                    <span class="text-lg font-heading font-light text-gray-400">
+                        BrimstoneLabs
+                    </span>
+                </div>
+                <div class="text-gray-400 text-center md:text-left">
+                    <p>&copy; <span id="current-year">2024</span>. All Rights Reserved.</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-8">
+                <!-- X (Twitter) -->
+                <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-200">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+                
+                <!-- GitHub -->
+                <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-200">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                
+                <!-- LinkedIn -->
+                <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors duration-200">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Globe Background -->
+    <div class="globe-background" id="globe-container"></div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "brimstonelabs-website",
+  "version": "1.0.0",
+  "description": "BrimstoneLabs website",
+  "type": "module",
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "dev:js": "node build.js --watch",
+    "dev:serve": "npx serve . -l 3000",
+    "build": "npm-run-all build:*",
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
+    "build:js": "node build.js",
+    "lint": "eslint src/js/**/*.js",
+    "format": "prettier --write .",
+    "preview": "npx serve ."
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "esbuild": "^0.19.0",
+    "npm-run-all": "^4.1.5",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0",
+    "serve": "^14.2.0"
+  }
+}
