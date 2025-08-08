@@ -421,6 +421,11 @@ html.light .bg-orange-500 {
     color: white !important;
 }
 
+/* Ensure all orange background elements keep white text in light mode */
+html.light [class*="bg-orange"] {
+    color: white !important;
+}
+
 /* Career skills pills in light mode */
 html.light .bg-gray-700 {
     background-color: #e5e7eb !important;
@@ -446,6 +451,11 @@ html.light .footer-logo {
 
 /* Ensure hover states work in light mode */
 html.light .hover\:text-orange-400:hover {
+    color: #f97316 !important;
+}
+
+/* Email link in contact section - light mode hover */
+html.light #contact a[href^="mailto:"]:hover {
     color: #f97316 !important;
 }
 
