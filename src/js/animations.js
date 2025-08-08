@@ -6,14 +6,27 @@
 export class AnimationManager {
     constructor() {
         this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.isLowEndDevice = this.detectLowEndDevice();
         this.splitCompleted = 0;
         this.showContentCallback = null;
         this.lenis = null;
         this.init();
     }
     
+    detectLowEndDevice() {
+        // Check device memory (low-end typically < 4GB)
+        const deviceMemory = navigator.deviceMemory || 4;
+        // Check CPU cores
+        const cores = navigator.hardwareConcurrency || 4;
+        // Check connection speed
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        const slowConnection = connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
+        
+        return deviceMemory < 4 || cores < 4 || slowConnection;
+    }
+    
     init() {
-        if (this.prefersReducedMotion) {
+        if (this.prefersReducedMotion || this.isLowEndDevice) {
             this.showContentImmediately();
             return;
         }
@@ -37,9 +50,9 @@ export class AnimationManager {
     }
     
     initLenis() {
-        // Skip on mobile for performance
+        // Skip on mobile and low-end devices for performance
         const isMobile = window.innerWidth < 768;
-        if (isMobile) return;
+        if (isMobile || this.isLowEndDevice) return;
         
         // Check if Lenis is available
         if (typeof Lenis === 'undefined') {
@@ -156,8 +169,10 @@ export class AnimationManager {
                 
                 const isFirstSection = element.closest('section')?.classList.contains('relative');
                 const isFastReveal = element.dataset.revealSpeed === 'fast';
-                const animationDuration = isFastReveal ? 0.2 : (isFirstSection ? 0.4 : 0.8);
-                const animationStagger = isFastReveal ? 0.02 : (isFirstSection ? 0.05 : 0.1);
+                // Faster animations on low-end devices
+                const durationMultiplier = this.isLowEndDevice ? 0.5 : 1;
+                const animationDuration = (isFastReveal ? 0.2 : (isFirstSection ? 0.4 : 0.8)) * durationMultiplier;
+                const animationStagger = (isFastReveal ? 0.02 : (isFirstSection ? 0.05 : 0.1)) * durationMultiplier;
                 
                 // Set initial state for characters
                 gsap.set(splitText.chars, { opacity: 0.2 });
@@ -381,29 +396,29 @@ export class AnimationManager {
     initFounderParallax() {
         if (typeof gsap === 'undefined') return;
         
-        // Skip parallax on mobile for performance
+        // Skip parallax on mobile and low-end devices for performance
         const isMobile = window.innerWidth < 768;
-        if (isMobile) return;
+        if (isMobile || this.isLowEndDevice) return;
         
         // Only select the actual images, not any divs or overlays
         const founderPhotos = document.querySelectorAll('.founder-card > div:first-child > img');
         
         founderPhotos.forEach((photo) => {
-            // Scale up the photo to have extra space for parallax movement
+            // Set initial position with 1.1x scaling
             gsap.set(photo, {
-                scale: 1.2,
-                transformOrigin: "center top",
-                yPercent: 0
+                scale: 1.1,
+                transformOrigin: "center center",
+                yPercent: -10
             });
             
             // Apply parallax effect to the photo only
-            // Move from 0 to negative to create downward parallax
+            // Move from -10 to 10 for moderate parallax
             gsap.fromTo(photo, 
                 {
-                    yPercent: 0
+                    yPercent: -10
                 },
                 {
-                    yPercent: -15,
+                    yPercent: 10,
                     ease: "none",
                     scrollTrigger: {
                         trigger: photo.closest('.founder-card'),

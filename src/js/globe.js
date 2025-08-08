@@ -20,6 +20,7 @@ export class GlobeManager {
         this.pointSpawnTimer = 0;
         this.pointSpawnInterval = this.isMobile ? 2.5 : 1.2;
         this.maxDynamicPoints = this.isMobile ? 3 : 10;
+        this.threeLoaded = false;
         
         // Performance settings
         this.isMobile = window.innerWidth < 768;
@@ -49,18 +50,24 @@ export class GlobeManager {
         // Check hardware concurrency (CPU cores)
         const cores = navigator.hardwareConcurrency || 4;
         
+        // More aggressive detection for performance
         return maxTextureSize < 4096 || deviceMemory < 4 || cores < 4;
     }
     
-    init() {
+    async init() {
         // Don't initialize on mobile at all
         if (this.isMobile || this.prefersReducedMotion || this.isLowEndDevice) {
             return;
         }
         
+        // Lazy load Three.js
         if (typeof THREE === 'undefined') {
-            console.error('Three.js not available');
-            return;
+            try {
+                await this.loadThreeJS();
+            } catch (error) {
+                console.error('Failed to load Three.js:', error);
+                return;
+            }
         }
         
         try {
@@ -74,6 +81,20 @@ export class GlobeManager {
                 this.container.style.display = 'none';
             }
         }
+    }
+    
+    loadThreeJS() {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+            script.async = true;
+            script.onload = () => {
+                this.threeLoaded = true;
+                resolve();
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
     }
     
     setupScene() {

@@ -504,10 +504,10 @@ html.light .globe-background {
 
 .founder-card img {
     will-change: transform;
-    /* Anchor to top for parallax */
-    transform-origin: center top;
-    /* Ensure image fills container from top */
-    object-position: top;
+    /* Anchor to center for balanced parallax */
+    transform-origin: center center;
+    /* Ensure image is centered in container */
+    object-position: center;
 }
 
 /* Ensure founder images are visible on mobile */
@@ -673,6 +673,30 @@ html.light .slider-mask {
     .slider-content {
         animation: none;
     }
+}
+
+/* Low performance mode optimizations */
+body.low-performance * {
+    animation-duration: 0s !important;
+    transition-duration: 0.1s !important;
+}
+
+body.low-performance .animated-gradient {
+    background: linear-gradient(-45deg, #ca8a04, #f97316) !important;
+    background-size: 100% 100% !important;
+    animation: none !important;
+}
+
+body.low-performance .globe-background {
+    display: none !important;
+}
+
+body.low-performance .founder-card img {
+    transform: none !important;
+}
+
+body.low-performance .reveal-type {
+    opacity: 1 !important;
 }
 
 

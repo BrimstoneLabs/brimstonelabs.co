@@ -6,12 +6,14 @@
 import { ThemeManager } from './theme.js';
 import { AnimationManager } from './animations.js';
 import { GlobeManager } from './globe.js';
+import { PerformanceMonitor } from './performance.js';
 
 class App {
     constructor() {
         this.themeManager = null;
         this.animationManager = null;
         this.globeManager = null;
+        this.performanceMonitor = null;
         
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
@@ -28,15 +30,37 @@ class App {
         // Initialize loading sequence
         this.handleLoading();
         
+        // Initialize performance monitor first
+        this.performanceMonitor = new PerformanceMonitor();
+        
         // Initialize modules
         this.themeManager = new ThemeManager();
         this.animationManager = new AnimationManager();
         
-        // Only initialize globe on desktop
+        // Only initialize globe on desktop and non-low-performance devices
         const isMobile = window.innerWidth < 768;
-        if (!isMobile) {
-            this.globeManager = new GlobeManager();
+        if (!isMobile && !this.performanceMonitor.isLowPerformance) {
+            // Use Intersection Observer to lazy load globe when visible
+            const globeContainer = document.getElementById('globe-container');
+            if (globeContainer) {
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting && !this.globeManager) {
+                        this.globeManager = new GlobeManager();
+                        observer.disconnect();
+                    }
+                }, { threshold: 0.1 });
+                observer.observe(globeContainer);
+            }
         }
+        
+        // Listen for performance changes
+        this.performanceMonitor.onPerformanceChange((isLowPerf) => {
+            if (isLowPerf && this.globeManager) {
+                // Destroy globe on low performance
+                this.globeManager.destroy();
+                this.globeManager = null;
+            }
+        });
         
         // Set current year in footer
         this.setCurrentYear();
